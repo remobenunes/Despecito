@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "191061308179",
+    "project_id": "despecito-586ee",
+    "storage_bucket": "despecito-586ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191061308179:android:eae80af8e87d53e29a20e6",
+        "android_client_info": {
+          "package_name": "com.company.despecito"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191061308179-lfkdlq7d5tfdna4hd4qp7hp543iri748.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8DYmuMhyqg444IcCLnRFABtco4gW0niU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191061308179-lfkdlq7d5tfdna4hd4qp7hp543iri748.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
