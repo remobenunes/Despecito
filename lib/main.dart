@@ -1,4 +1,5 @@
 import 'package:despecito/app/presentation/ui/pages/home/home_page.dart';
+import 'package:despecito/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ;
     return MultiProvider(
       providers: [
         //por algum motivo, dá bug se a lista tiver vazia, tbm servir como exemplo
@@ -23,9 +25,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         initialRoute: '/',
-        routes: {
-          '/': (context) => const HomePage(),
-        },
+        routes: Routes.routes,
       ),
     );
   }
