@@ -1,9 +1,17 @@
 import 'dart:convert';
+import 'package:hive_flutter/hive_flutter.dart';
 
-class Expense {
+part 'expense.g.dart';
+
+@HiveType(typeId: 0)
+class Expense  extends HiveObject {
+  @HiveField(0)
   final double? value;
+  @HiveField(1)
   final String? name;
+  @HiveField(2)
   final String? category;
+  @HiveField(3)
   final String? description;
 
   Expense({

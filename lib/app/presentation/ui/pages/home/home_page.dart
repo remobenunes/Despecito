@@ -1,5 +1,7 @@
-import 'package:despecito/app/domain/models/entities/expanse.dart';
+import 'package:despecito/app/domain/models/entities/expense/expense.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -9,6 +11,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void dispose() {
+    Hive.close();
+
+    super.dispose();
+  }
+
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   Expense expense1 = Expense(
     category: 'Lanches',
