@@ -12,7 +12,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ;
     return MultiProvider(
       providers: [
         //por algum motivo, dá bug se a lista tiver vazia, tbm servir como exemplo
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
         title: 'Despecito',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.deepPurple,
         ),
         initialRoute: '/',
         routes: Routes.routes,
