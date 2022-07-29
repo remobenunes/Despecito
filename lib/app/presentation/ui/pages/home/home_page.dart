@@ -1,4 +1,6 @@
-import 'package:despecito/app/domain/models/entities/expense/expense.dart';
+import 'package:despecito/app/domain/models/dtos/expense_dto.dart';
+import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_alert_dialog.dart';
+import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive/hive.dart';
@@ -19,31 +21,31 @@ class _HomePageState extends State<HomePage> {
   }
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  Expense expense1 = Expense(
+  ExpenseDto exp1 = ExpenseDto(
     category: 'Lanches',
     description: 'Lanchinho',
     name: 'Lanchao',
     value: 22.50,
   );
-  Expense expense2 = Expense(
+  ExpenseDto exp2 = ExpenseDto(
     category: 'carro',
     description: 'Gasolina',
     name: 'Gasolina',
     value: 220,
   );
-  Expense expense3 = Expense(
+  ExpenseDto exp3 = ExpenseDto(
     category: 'carro',
     description: 'Manutençao',
     name: 'Manutençao',
     value: 220,
   );
-  List<Expense> expenseList = [];
+  List<ExpenseDto> expenseList = [];
 
   @override
   void initState() {
-    expenseList.add(expense1);
-    expenseList.add(expense2);
-    expenseList.add(expense3);
+    expenseList.add(exp1);
+    expenseList.add(exp2);
+    expenseList.add(exp3);
     super.initState();
   }
 
@@ -63,7 +65,9 @@ class _HomePageState extends State<HomePage> {
     return AppBar(
       backgroundColor: Colors.black,
       leading: _leading(),
-      actions: [_addButton()],
+      actions: [
+        _addButton(),
+      ],
     );
   }
 
@@ -74,17 +78,13 @@ class _HomePageState extends State<HomePage> {
         showDialog(
             context: context,
             builder: (_) {
-              return AlertDialog(
-                content: Container(
-                  height: 200,
-                  width: 200,
-                  color: Colors.purple,
-                ),
-              );
+              return CustomAlertDialog();
             });
       },
     );
   }
+
+
 
   IconButton _leading() {
     return IconButton(
@@ -100,27 +100,13 @@ class _HomePageState extends State<HomePage> {
         var item = expenseList[index];
         return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ListTile(
-            tileColor: Colors.grey[800],
-            title: Text(
-              item.name ?? '',
-              style: const TextStyle(color: Colors.white),
-            ),
-            subtitle: Text(
-              '${item.value ?? ''}',
-              style: const TextStyle(color: Colors.white),
-            ),
-            trailing: IconButton(
-              icon: const Icon(
-                Icons.delete,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                setState(() {
-                  expenseList.removeAt(index);
-                });
-              },
-            ),
+          child: CustomListTile(
+            expenseDto: item,
+            function: () {
+              setState(() {
+                expenseList.removeAt(index);
+              });
+            },
           ),
         );
       },
