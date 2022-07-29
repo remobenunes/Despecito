@@ -1,3 +1,4 @@
+import 'package:despecito/app/domain/models/dtos/expense_dto.dart';
 import 'package:despecito/app/domain/models/entities/expense/expense.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -19,19 +20,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  Expense expense1 = Expense(
+  ExpenseDto exp1 = ExpenseDto(
     category: 'Lanches',
     description: 'Lanchinho',
     name: 'Lanchao',
     value: 22.50,
   );
-  Expense expense2 = Expense(
+  ExpenseDto exp2 = ExpenseDto(
     category: 'carro',
     description: 'Gasolina',
     name: 'Gasolina',
     value: 220,
   );
-  Expense expense3 = Expense(
+  ExpenseDto exp3 = ExpenseDto(
     category: 'carro',
     description: 'Manutençao',
     name: 'Manutençao',
@@ -41,9 +42,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    expenseList.add(expense1);
-    expenseList.add(expense2);
-    expenseList.add(expense3);
+    expenseList.add(exp1);
+    expenseList.add(exp2);
+    expenseList.add(exp3);
     super.initState();
   }
 
