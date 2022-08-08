@@ -76,15 +76,21 @@ class _HomePageState extends State<HomePage> {
       icon: const Icon(Icons.add),
       onPressed: () {
         showDialog(
-            context: context,
-            builder: (_) {
-              return CustomAlertDialog();
-            });
+          context: context,
+          builder: (_) {
+            return CustomAlertDialog(
+              function: (expense) {
+                setState(() {
+                  expenseList.add(expense);
+                  
+                });
+              },
+            );
+          },
+        );
       },
     );
   }
-
-
 
   IconButton _leading() {
     return IconButton(
