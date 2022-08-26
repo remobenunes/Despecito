@@ -1,6 +1,7 @@
 import 'package:despecito/app/domain/models/dtos/expense_dto.dart';
 import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_alert_dialog.dart';
 import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_list_tile.dart';
+import 'package:despecito/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive/hive.dart';
@@ -20,7 +21,6 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   ExpenseDto exp1 = ExpenseDto(
     category: 'Lanches',
     description: 'Lanchinho',
@@ -53,7 +53,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        key: scaffoldKey,
         appBar: _appBar(),
         body: _body(),
         backgroundColor: Colors.grey[900],
@@ -82,7 +81,6 @@ class _HomePageState extends State<HomePage> {
               function: (expense) {
                 setState(() {
                   expenseList.add(expense);
-                  
                 });
               },
             );
@@ -111,6 +109,7 @@ class _HomePageState extends State<HomePage> {
             function: () {
               setState(() {
                 expenseList.removeAt(index);
+                Utils.showSnackBar(context, 'Despesa Removida com sucesso!');
               });
             },
           ),

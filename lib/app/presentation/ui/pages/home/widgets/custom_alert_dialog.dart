@@ -1,6 +1,8 @@
+import 'package:despecito/app/utils/utils.dart';
+import 'package:flutter/material.dart';
+
 import 'package:despecito/app/domain/models/dtos/expense_dto.dart';
 import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_text_field.dart';
-import 'package:flutter/material.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   final Function(ExpenseDto expense) function;
@@ -19,53 +21,69 @@ class CustomAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Colors.grey[800],
+      content: _content(),
       actions: [
-        ElevatedButton(
-          child: const Text('Cancel'),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        ElevatedButton(
-          child: const Text('Add'),
-          onPressed: () {
-            final expense = ExpenseDto(
-              category: categoryController.text,
-              name: nameController.text,
-              description: descriptionController.text,
-              value: getDouble(),
-              createdAt: DateTime.now(),
-            );
+        _addButton(context),
+        _cancelButton(context),
+      ],
+    );
+  }
 
-            function(expense);
-          },
+  Column _content() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CustomTextField(
+          hint: 'Valor',
+          keyboardType: TextInputType.number,
+          controller: valueController,
+        ),
+        const SizedBox(height: 16),
+        CustomTextField(
+          hint: 'Nome',
+          controller: nameController,
+        ),
+        const SizedBox(height: 16),
+        CustomTextField(
+          hint: 'Categoria',
+          controller: categoryController,
+        ),
+        const SizedBox(height: 16),
+        CustomTextField(
+          hint: 'Descrição',
+          controller: descriptionController,
         ),
       ],
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CustomTextField(
-            hint: 'Valor',
-            keyboardType: TextInputType.number,
-            controller: valueController,
-          ),
-          const SizedBox(height: 16),
-          CustomTextField(
-            hint: 'Nome',
-            controller: nameController,
-          ),
-          const SizedBox(height: 16),
-          CustomTextField(
-            hint: 'Categoria',
-            controller: categoryController,
-          ),
-          const SizedBox(height: 16),
-          CustomTextField(
-            hint: 'Descrição',
-            controller: descriptionController,
-          ),
-        ],
-      ),
+    );
+  }
+
+  ElevatedButton _addButton(BuildContext context) {
+    return ElevatedButton(
+      child: const Text('Adicionar'),
+      onPressed: () {
+        final expense = ExpenseDto(
+          category: categoryController.text,
+          name: nameController.text,
+          description: descriptionController.text,
+          value: getDouble(),
+          createdAt: DateTime.now(),
+        );
+
+        function(expense);
+
+        FocusManager.instance.primaryFocus?.unfocus();
+
+        Utils.showSnackBar(context, 'Nova Despesa Adicionada');
+      },
+    );
+  }
+
+  ElevatedButton _cancelButton(BuildContext context) {
+    return ElevatedButton(
+      child: const Text('Cancelar'),
+      onPressed: () {
+        Navigator.pop(context);
+      },
     );
   }
 
