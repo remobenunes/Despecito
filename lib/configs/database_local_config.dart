@@ -12,7 +12,7 @@ class DatabaseLocalConfig {
     Hive.registerAdapter(ExpenseAdapter());
   }
 
-  openBoxes() async {
+ static openBoxes() async {
     await Hive.openBox<Expense>('expenses');
   }
 }

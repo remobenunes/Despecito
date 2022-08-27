@@ -61,20 +61,23 @@ class CustomAlertDialog extends StatelessWidget {
     return ElevatedButton(
       child: const Text('Adicionar'),
       onPressed: () {
-        final expense = ExpenseDto(
-          category: categoryController.text,
-          name: nameController.text,
-          description: descriptionController.text,
-          value: getDouble(),
-          createdAt: DateTime.now(),
-        );
+        ExpenseDto expense = _createDto();
 
         function(expense);
 
         FocusManager.instance.primaryFocus?.unfocus();
-
         Utils.showSnackBar(context, 'Nova Despesa Adicionada');
       },
+    );
+  }
+
+  ExpenseDto _createDto() {
+    return ExpenseDto(
+      name: nameController.text == "" ? 'Nao Nomeado' : nameController.text,
+      value: getDouble(),
+      category: categoryController.text,
+      description: descriptionController.text,
+      createdAt: DateTime.now(),
     );
   }
 

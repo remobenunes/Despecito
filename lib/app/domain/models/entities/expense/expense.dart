@@ -23,4 +23,9 @@ class Expense extends HiveObject {
     this.description,
     this.createdAt,
   });
+
+  // @override
+  // String toString() {
+  //   return 'Expense(value: $value, name: $name, category: $category, description: $description)';
+  // }
 }
