@@ -1,8 +1,9 @@
 import 'package:despecito/app/domain/models/dtos/expense_dto.dart';
+import 'package:despecito/app/domain/models/entities/expense/expense.dart';
 import 'package:flutter/material.dart';
 
 class CustomListTile extends StatefulWidget {
-  final ExpenseDto expenseDto;
+  final Expense expenseDto;
   final Function() function;
 
   const CustomListTile({

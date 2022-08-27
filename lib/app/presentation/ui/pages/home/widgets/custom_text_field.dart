@@ -29,7 +29,7 @@ class CustomTextField extends StatelessWidget {
       keyboardType: keyboardType ?? TextInputType.text,
       decoration: InputDecoration(
         hintText: hint!,
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Color.fromARGB(50, 252, 251, 251),
         ),
         isDense: true,
@@ -38,10 +38,4 @@ class CustomTextField extends StatelessWidget {
     );
   }
 
-  TextStyle _style() {
-    return const TextStyle(
-      color: Colors.white,
-      fontWeight: FontWeight.bold,
-    );
-  }
 }
