@@ -1,4 +1,3 @@
-import 'package:despecito/app/domain/models/dtos/expense_dto.dart';
 import 'package:despecito/app/domain/models/entities/expense/expense.dart';
 import 'package:flutter/material.dart';
 

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'expense.g.dart';
@@ -14,18 +13,18 @@ class Expense extends HiveObject {
   @HiveField(3)
   final String? description;
   @HiveField(4)
-  final DateTime? createdAt;
+  final String? createdAt;
 
   Expense({
     this.value,
     this.name,
     this.category,
     this.description,
-    this.createdAt,
+    required this.createdAt,
   });
 
-  // @override
-  // String toString() {
-  //   return 'Expense(value: $value, name: $name, category: $category, description: $description)';
-  // }
+  @override
+  String toString() {
+    return 'Expense(value: $value, name: $name, category: $category, description: $description, createdAt: ${createdAt.toString()})';
+  }
 }

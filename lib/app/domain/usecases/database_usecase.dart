@@ -1,8 +1,9 @@
-import 'package:despecito/app/domain/models/dtos/expense_dto.dart';
+import 'package:despecito/app/domain/models/entities/expense/expense.dart';
 
 abstract class DatabaseUsecase {
-  Future<ExpenseDto> create();
-  Future<ExpenseDto> read();
-  Future<ExpenseDto> delete();
-  Future<ExpenseDto> update();
+  create(Expense expense);
+  delete(Expense expense);
+  read();
+  update();
+  Future<List<Expense>> getAll();
 }

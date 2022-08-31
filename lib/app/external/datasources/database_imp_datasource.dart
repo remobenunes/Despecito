@@ -1,31 +1,23 @@
-import 'package:despecito/app/domain/models/dtos/expense_dto.dart';
-
 import '../../data/datasources/database_datasource.dart';
 
 class DatabaseImpDatasource implements DatabaseDatasource {
   @override
-  Future<ExpenseDto> create() {
-    // TODO: implement create
-    throw UnimplementedError();
+  create() {
+    print('create');
   }
 
   @override
-  Future<ExpenseDto> delete() {
-    // TODO: implement delete
-    throw UnimplementedError();
+  delete() {
+    print('delete');
   }
 
   @override
-  Future<ExpenseDto> read() {
-    // TODO: implement read
-    throw UnimplementedError();
+  read() {
+    print('read');
   }
 
   @override
-  Future<ExpenseDto> update() {
-    // TODO: implement update
-    throw UnimplementedError();
+  update() {
+    print('update');
   }
-
 }
-  

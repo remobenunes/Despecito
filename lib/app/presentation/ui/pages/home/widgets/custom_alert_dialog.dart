@@ -62,7 +62,6 @@ class CustomAlertDialog extends StatelessWidget {
       child: const Text('Adicionar'),
       onPressed: () {
         ExpenseDto expense = _createDto();
-
         function(expense);
 
         FocusManager.instance.primaryFocus?.unfocus();
@@ -77,7 +76,7 @@ class CustomAlertDialog extends StatelessWidget {
       value: getDouble(),
       category: categoryController.text,
       description: descriptionController.text,
-      createdAt: DateTime.now(),
+      createdAt: DateTime.now().toString(),
     );
   }
 

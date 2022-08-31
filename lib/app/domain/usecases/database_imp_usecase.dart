@@ -1,30 +1,55 @@
-import 'package:despecito/app/domain/models/dtos/expense_dto.dart';
-
+import 'package:despecito/app/domain/models/entities/expense/expense.dart';
+import 'package:despecito/app/domain/repositories/database_repository.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'database_usecase.dart';
 
 class DatabaseImpUsecase implements DatabaseUsecase {
+  final DatabaseRepository _databaseRepository;
+  final String _boxName = 'expenses';
+
+  DatabaseImpUsecase(this._databaseRepository);
+
   @override
-  Future<ExpenseDto> create() {
-    // TODO: implement create
+  create(Expense expense) async {
+    try {
+      var box = await Hive.openBox<Expense>(_boxName);
+      box.put(expense.createdAt.toString(), expense);
+
+      // _databaseRepository.create();
+    } on Exception catch (error) {
+      print(error.toString());
+    }
+  }
+
+  @override
+  delete(Expense expense) async {
+    try {
+      var box = await Hive.openBox<Expense>(_boxName);
+      box.delete(expense.createdAt);
+
+      _databaseRepository.delete();
+    } on Exception catch (error) {
+      print(error.toString());
+    }
+  }
+
+  @override
+  read() {
+    _databaseRepository.read();
     throw UnimplementedError();
   }
 
   @override
-  Future<ExpenseDto> delete() {
-    // TODO: implement delete
+  update() {
+    _databaseRepository.update();
     throw UnimplementedError();
   }
 
   @override
-  Future<ExpenseDto> read() {
-    // TODO: implement read
-    throw UnimplementedError();
-  }
+  Future<List<Expense>> getAll() async {
+    var box = await Hive.openBox<Expense>(_boxName);
 
-  @override
-  Future<ExpenseDto> update() {
-    // TODO: implement update
-    throw UnimplementedError();
+    // box.values.toList().forEach(print);
+    return box.values.toList();
   }
 }
-  
