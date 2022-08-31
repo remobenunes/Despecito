@@ -2,10 +2,11 @@ import 'package:despecito/app/domain/models/entities/expense/expense.dart';
 import 'package:despecito/app/domain/usecases/database_usecase.dart';
 import 'package:flutter/cupertino.dart';
 
-class HomeController extends ChangeNotifier {
+class HomeController {
   final DatabaseUsecase _databaseUsecase;
   bool loading = false;
   List<Expense> expenseList = [];
+  var list$ = ValueNotifier<List<Expense>>([]);
 
   HomeController(this._databaseUsecase);
 
@@ -16,18 +17,15 @@ class HomeController extends ChangeNotifier {
   void create(Expense expense) async {
     await _databaseUsecase.create(expense);
     getAll();
-    notifyListeners();
   }
 
   void delete(Expense expense) async {
     await _databaseUsecase.delete(expense);
     getAll();
-    notifyListeners();
   }
 
   void getAll() async {
-    expenseList = await _databaseUsecase.getAll();
-    notifyListeners();
+    list$.value = await _databaseUsecase.getAll();
+    expenseList = list$.value;
   }
-
 }

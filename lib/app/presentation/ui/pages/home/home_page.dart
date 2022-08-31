@@ -21,8 +21,10 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     controller = HomeController(context.read());
     controller.getAll();
-    controller.addListener(() {
-      setState(() {});
+    controller.list$.addListener(() {
+      setState(() {
+        print('Mudou!');
+      });
     });
 
     super.initState();
