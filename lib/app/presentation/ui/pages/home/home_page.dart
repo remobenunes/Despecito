@@ -1,11 +1,11 @@
-import 'package:despecito/app/domain/models/dtos/expense_dto.dart';
-import 'package:despecito/app/domain/models/entities/expense/expense.dart';
+import 'package:despecito/app/presentation/ui/pages/home/home_controller.dart';
 import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_alert_dialog.dart';
 import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_list_tile.dart';
 import 'package:despecito/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,13 +15,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late final Box box;
-
-  List<Expense> expenseList = [];
+  late final HomeController controller;
 
   @override
   void initState() {
-    openBoxes();
+    controller = HomeController(context.read());
+    controller.getAll();
+    controller.list$.addListener(() {
+      setState(() {
+        print('Mudou!');
+      });
+    });
 
     super.initState();
   }
@@ -36,24 +40,24 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: _appBar(),
-        body: _body(),
+        appBar: _appBar(controller),
+        body: _Body(controller),
         backgroundColor: Colors.grey[900],
       ),
     );
   }
 
-  AppBar _appBar() {
+  AppBar _appBar(HomeController controller) {
     return AppBar(
       backgroundColor: Colors.black,
       leading: _leading(),
       actions: [
-        _addButton(),
+        _addButton(controller),
       ],
     );
   }
 
-  IconButton _addButton() {
+  IconButton _addButton(HomeController controller) {
     return IconButton(
       icon: const Icon(Icons.add),
       onPressed: () {
@@ -62,11 +66,8 @@ class _HomePageState extends State<HomePage> {
           builder: (_) {
             return CustomAlertDialog(
               function: (expense) async {
-                expenseList.add(expense);
-                await box.put(Utils.generateRandomString(), expense);
-                print(box.values.length);
-
-                setState(() {});
+                controller.expenseList.add(expense);
+                controller.create(expense);
               },
             );
           },
@@ -81,61 +82,34 @@ class _HomePageState extends State<HomePage> {
       onPressed: () {},
     );
   }
+}
 
-  openBoxes() async {
-    final exp1 = ExpenseDto(
-      category: 'Lanches',
-      description: 'Lanchinho',
-      name: 'Lanchao',
-      value: 22.50,
-    );
-    final exp2 = ExpenseDto(
-      category: 'carro',
-      description: 'Gasolina',
-      name: 'Gasolina',
-      value: 220,
-    );
-    final exp3 = ExpenseDto(
-      category: 'carro',
-      description: 'Manutençao',
-      name: 'Manutençao',
-      value: 220,
-    );
+class _Body extends StatefulWidget {
+  final HomeController controller;
 
-    box = await Hive.openBox<Expense>('expenses');
-    box.put('exp1', exp1);
-    box.put('exp2', exp2);
-    box.put('exp3', exp3);
+  const _Body(this.controller);
 
-    setState(() {
-      final list = box.values;
-      print(list);
-      for (var element in list) {
-        print(element);
-        expenseList.add(element);
-      }
-    });
-  }
+  @override
+  State<_Body> createState() => _BodyState();
+}
 
-  _body() {
+class _BodyState extends State<_Body> {
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 50),
       child: ListView.builder(
-        itemCount: expenseList.length,
+        itemCount: widget.controller.expenseList.length,
         itemBuilder: (context, index) {
-          var item = expenseList[index];
+          var item = widget.controller.expenseList[index];
 
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: CustomListTile(
               expenseDto: item,
               function: () async {
-                expenseList.removeAt(index);
+                widget.controller.delete(item);
                 Utils.showSnackBar(context, 'Despesa Removida com sucesso!');
-                await box.deleteAt(index);
-
-                print(box.values.length);
-
                 setState(() {});
               },
             ),

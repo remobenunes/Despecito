@@ -1,32 +1,28 @@
-import 'package:despecito/app/domain/models/dtos/expense_dto.dart';
-
+import 'package:despecito/app/data/datasources/database_datasource.dart';
 import '../../domain/repositories/database_repository.dart';
 
 class DatabaseImpRepository implements DatabaseRepository {
+  final DatabaseDatasource _databaseDatasource;
+
+  DatabaseImpRepository(this._databaseDatasource);
+
   @override
-  Future<ExpenseDto> create() {
-    // TODO: implement create
-    throw UnimplementedError();
+  void create() {
+    _databaseDatasource.create();
   }
 
   @override
-  Future<ExpenseDto> delete() {
-    // TODO: implement delete
-    throw UnimplementedError();
+  void delete() {
+    _databaseDatasource.delete();
   }
 
   @override
-  Future<ExpenseDto> read() {
-    // TODO: implement read
-    throw UnimplementedError();
+  void read() {
+    _databaseDatasource.read();
   }
 
   @override
-  Future<ExpenseDto> update() {
-    // TODO: implement update
-    throw UnimplementedError();
+  void update() {
+    _databaseDatasource.update();
   }
-
 }
-  
-  

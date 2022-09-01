@@ -6,7 +6,7 @@ class ExpenseDto extends Expense {
     final String? name,
     final String? category,
     final String? description,
-    final DateTime? createdAt,
+    required final String? createdAt,
   }) : super(
           category: category,
           description: description,
@@ -17,6 +17,6 @@ class ExpenseDto extends Expense {
 
   @override
   String toString() {
-    return 'Expense(value: $value, name: $name, category: $category, description: $description)';
+    return 'ExpenseDto(value: $value, name: $name, category: $category, description: $description, createdAt: ${createdAt.toString()} )';
   }
 }
