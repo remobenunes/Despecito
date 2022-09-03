@@ -12,11 +12,6 @@ class DatabaseImpDatasource implements DatabaseDatasource {
   }
 
   @override
-  read() {
-    print('read');
-  }
-
-  @override
   update() {
     print('update');
   }

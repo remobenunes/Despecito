@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 
 class CustomListTile extends StatefulWidget {
   final Expense expenseDto;
-  final Function() function;
+  final Function() deleteFunction;
+  final Function() updateFunction;
 
   const CustomListTile({
     Key? key,
     required this.expenseDto,
-    required this.function,
+    required this.deleteFunction,
+    required this.updateFunction,
   }) : super(key: key);
 
   @override
@@ -19,24 +21,71 @@ class _CustomListTileState extends State<CustomListTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: Colors.grey[800],
-      title: Text(
-        widget.expenseDto.name ?? '',
-        style: const TextStyle(color: Colors.white),
+      contentPadding: const EdgeInsets.only(left: 16),
+      tileColor: Theme.of(context).colorScheme.primary,
+      title: _title(),
+      subtitle: _subtitle(),
+      trailing: trailing(),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10))),
+    );
+  }
+
+  Text _title() {
+    return Text(
+      widget.expenseDto.name ?? '',
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
       ),
-      subtitle: Text(
-        '${widget.expenseDto.value ?? ''}',
-        style: const TextStyle(color: Colors.white),
+    );
+  }
+
+  Text _subtitle() {
+    return Text(
+      'R\$${widget.expenseDto.value ?? ''}',
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
       ),
-      trailing: IconButton(
-        icon: const Icon(
-          Icons.delete,
+    );
+  }
+
+  Row trailing() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        buildButton(Icons.edit, () {
+          widget.updateFunction();
+        }),
+        buildButton(Icons.delete, () {
+          widget.deleteFunction();
+        }),
+      ],
+    );
+  }
+
+  GestureDetector buildButton(IconData iconData, Function() onTap) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      child: SizedBox(
+        height: 50,
+        width: 50,
+        child: Icon(
+          iconData,
           color: Colors.white,
+          size: 20,
         ),
-        onPressed: () {
-          widget.function();
-        },
       ),
+      onTap: () {
+        onTap();
+      },
     );
   }
 }

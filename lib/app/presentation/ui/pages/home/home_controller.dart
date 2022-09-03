@@ -24,6 +24,11 @@ class HomeController {
     getAll();
   }
 
+  void update(Expense expense) async {
+    await _databaseUsecase.update(expense);
+    getAll();
+  }
+
   void getAll() async {
     list$.value = await _databaseUsecase.getAll();
     expenseList = list$.value;

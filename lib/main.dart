@@ -9,6 +9,7 @@ import 'package:despecito/configs/database_local_config.dart';
 import 'package:despecito/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import "dart:math";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,33 +23,63 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var providers = [
+      //datasource
+      Provider<DatabaseDatasource>(
+          create: (context) => DatabaseImpDatasource()),
+
+      //repository
+      Provider<DatabaseRepository>(
+          create: (context) => DatabaseImpRepository(context.read())),
+
+      //usecase
+      Provider<DatabaseUsecase>(
+          create: (context) => DatabaseImpUsecase(context.read())),
+
+      //controllers
+      Provider<HomeController>(
+          create: (context) => HomeController(context.read())),
+    ];
+
     return MultiProvider(
-      providers: [
-        //datasource
-        Provider<DatabaseDatasource>(
-            create: (context) => DatabaseImpDatasource()),
-
-        //repository
-        Provider<DatabaseRepository>(
-            create: (context) => DatabaseImpRepository(context.read())),
-
-        //usecase
-        Provider<DatabaseUsecase>(
-            create: (context) => DatabaseImpUsecase(context.read())),
-
-        //controllers
-        Provider<HomeController>(
-            create: (context) => HomeController(context.read())),
-      ],
+      providers: providers,
       child: MaterialApp(
         title: 'Despecito',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.deepPurple,
+          primarySwatch: generateRandomMaterialColor(),
         ),
         initialRoute: '/',
         routes: Routes.routes,
       ),
     );
+  }
+
+  MaterialColor generateRandomMaterialColor() {
+    List<MaterialColor> list = [
+      Colors.amber,
+      Colors.blue,
+      Colors.blueGrey,
+      Colors.brown,
+      Colors.cyan,
+      Colors.deepOrange,
+      Colors.deepPurple,
+      Colors.green,
+      Colors.grey,
+      Colors.indigo,
+      Colors.lightBlue,
+      Colors.lightGreen,
+      Colors.lime,
+      Colors.orange,
+      Colors.pink,
+      Colors.purple,
+      Colors.red,
+      Colors.teal,
+      // Colors.yellow,
+    ];
+
+    final random = Random();
+    int randomIndex = random.nextInt(list.length);
+    return list[randomIndex];
   }
 }

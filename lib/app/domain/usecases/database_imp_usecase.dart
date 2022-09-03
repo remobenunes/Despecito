@@ -27,22 +27,18 @@ class DatabaseImpUsecase implements DatabaseUsecase {
       var box = await Hive.openBox<Expense>(_boxName);
       box.delete(expense.createdAt);
 
-      _databaseRepository.delete();
+      // _databaseRepository.delete();
     } on Exception catch (error) {
       print(error.toString());
     }
   }
 
   @override
-  read() {
-    _databaseRepository.read();
-    throw UnimplementedError();
-  }
+  update(Expense expense) async {
+    var box = await Hive.openBox<Expense>(_boxName);
+    box.put(expense.createdAt, expense);
 
-  @override
-  update() {
-    _databaseRepository.update();
-    throw UnimplementedError();
+    // _databaseRepository.update();
   }
 
   @override

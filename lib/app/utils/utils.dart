@@ -5,7 +5,11 @@ class Utils {
     final scaffold = ScaffoldMessenger.of(context);
     scaffold.showSnackBar(
       SnackBar(
-        content: Text(text),
+        content: Text(
+          text,
+          style: TextStyle(fontSize: 16),
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }
