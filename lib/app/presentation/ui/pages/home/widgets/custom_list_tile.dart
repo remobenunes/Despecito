@@ -22,24 +22,38 @@ class _CustomListTileState extends State<CustomListTile> {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: const EdgeInsets.only(left: 16),
-      tileColor: Colors.grey[800],
+      tileColor: Theme.of(context).colorScheme.primary,
       title: _title(),
       subtitle: _subtitle(),
       trailing: trailing(),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10))),
     );
   }
 
   Text _title() {
     return Text(
       widget.expenseDto.name ?? '',
-      style: const TextStyle(color: Colors.white),
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+      ),
     );
   }
 
   Text _subtitle() {
     return Text(
-      '${widget.expenseDto.value ?? ''}',
-      style: const TextStyle(color: Colors.white),
+      'R\$${widget.expenseDto.value ?? ''}',
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+      ),
     );
   }
 
@@ -66,7 +80,7 @@ class _CustomListTileState extends State<CustomListTile> {
         child: Icon(
           iconData,
           color: Colors.white,
-          size: 18,
+          size: 20,
         ),
       ),
       onTap: () {

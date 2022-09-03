@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
       Colors.purple,
       Colors.red,
       Colors.teal,
-      Colors.yellow,
+      // Colors.yellow,
     ];
 
     final random = Random();

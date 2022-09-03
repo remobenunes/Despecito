@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'package:despecito/app/domain/models/dtos/expense_dto.dart';
@@ -25,17 +27,21 @@ class CustomAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      backgroundColor: Colors.grey[800],
-      content: _content(),
-      actions: [
-        _addButton(context),
-        _cancelButton(context),
-      ],
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+      child: AlertDialog(
+        backgroundColor: Colors.transparent,
+        content: _content(),
+        actionsAlignment: MainAxisAlignment.center,
+        actions: [
+          _addButton(context),
+          _cancelButton(context),
+        ],
+      ),
     );
   }
 
-  Column _content() {
+  _content() {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -71,14 +77,14 @@ class CustomAlertDialog extends StatelessWidget {
         function(expense);
 
         FocusManager.instance.primaryFocus?.unfocus();
-        Utils.showSnackBar(context, 'Nova Despesa Adicionada');
+        Utils.showSnackBar(context, 'Nova Despesa Adicionada',);
       },
     );
   }
 
   ExpenseDto _createDto() {
     return ExpenseDto(
-      name: nameController.text,
+      name: nameController.text == '' ? 'Não Nomeado' : nameController.text ,
       value: getDouble(),
       category: categoryController.text,
       description: descriptionController.text,
