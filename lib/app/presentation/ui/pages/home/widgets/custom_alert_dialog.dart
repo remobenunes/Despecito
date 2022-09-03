@@ -1,21 +1,27 @@
-import 'package:despecito/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:despecito/app/domain/models/dtos/expense_dto.dart';
+import 'package:despecito/app/domain/models/entities/expense/expense.dart';
 import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_text_field.dart';
+import 'package:despecito/app/utils/utils.dart';
 
 class CustomAlertDialog extends StatelessWidget {
+  Expense? expense;
   final Function(ExpenseDto expense) function;
 
   CustomAlertDialog({
     Key? key,
+    this.expense,
     required this.function,
   }) : super(key: key);
 
-  final valueController = TextEditingController();
-  final nameController = TextEditingController();
-  final categoryController = TextEditingController();
-  final descriptionController = TextEditingController();
+  late final valueController =
+      TextEditingController(text: expense?.value.toString());
+  late final nameController = TextEditingController(text: expense?.name);
+  late final categoryController =
+      TextEditingController(text: expense?.category);
+  late final descriptionController =
+      TextEditingController(text: expense?.description);
 
   @override
   Widget build(BuildContext context) {
@@ -34,23 +40,23 @@ class CustomAlertDialog extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         CustomTextField(
-          hint: 'Valor',
+          label: 'Valor',
           keyboardType: TextInputType.number,
           controller: valueController,
         ),
         const SizedBox(height: 16),
         CustomTextField(
-          hint: 'Nome',
+          label: 'Nome',
           controller: nameController,
         ),
         const SizedBox(height: 16),
         CustomTextField(
-          hint: 'Categoria',
+          label: 'Categoria',
           controller: categoryController,
         ),
         const SizedBox(height: 16),
         CustomTextField(
-          hint: 'Descrição',
+          label: 'Descrição',
           controller: descriptionController,
         ),
       ],
@@ -72,11 +78,11 @@ class CustomAlertDialog extends StatelessWidget {
 
   ExpenseDto _createDto() {
     return ExpenseDto(
-      name: nameController.text == "" ? 'Nao Nomeado' : nameController.text,
+      name: nameController.text,
       value: getDouble(),
       category: categoryController.text,
       description: descriptionController.text,
-      createdAt: DateTime.now().toString(),
+      createdAt: expense?.createdAt ?? DateTime.now().toString(),
     );
   }
 

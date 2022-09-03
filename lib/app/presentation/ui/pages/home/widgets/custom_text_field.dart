@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  final String? hint;
+  final String? label;
   final TextInputType? keyboardType;
   final TextEditingController? controller;
 
   const CustomTextField({
     Key? key,
-    this.hint,
+    this.label,
     this.keyboardType,
     this.controller,
   }) : super(key: key);
@@ -18,24 +18,29 @@ class CustomTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // _label(),
-        _formField(),
+        _formField(context),
       ],
     );
   }
 
-  _formField() {
-    return TextFormField(
+  _formField(BuildContext context) {
+    return TextField(
       controller: controller,
       keyboardType: keyboardType ?? TextInputType.text,
+      style: TextStyle(color: Theme.of(context).colorScheme.primary),
       decoration: InputDecoration(
-        hintText: hint!,
-        hintStyle: const TextStyle(
-          color: Color.fromARGB(50, 252, 251, 251),
+        labelText: label,
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+              color: Theme.of(context).colorScheme.primary, width: 1.0),
         ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+              color: Theme.of(context).colorScheme.primary, width: 1.0),
+        ),
+        labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         isDense: true,
-        contentPadding: const EdgeInsets.only(top: 16, bottom: 12),
       ),
     );
   }
-
 }

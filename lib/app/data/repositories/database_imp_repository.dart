@@ -17,11 +17,6 @@ class DatabaseImpRepository implements DatabaseRepository {
   }
 
   @override
-  void read() {
-    _databaseDatasource.read();
-  }
-
-  @override
   void update() {
     _databaseDatasource.update();
   }
