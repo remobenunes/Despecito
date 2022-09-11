@@ -8,7 +8,7 @@ import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_text_fie
 import 'package:despecito/app/utils/utils.dart';
 
 class CustomAlertDialog extends StatelessWidget {
-  Expense? expense;
+  final Expense? expense;
   final Function(ExpenseDto expense) function;
 
   CustomAlertDialog({

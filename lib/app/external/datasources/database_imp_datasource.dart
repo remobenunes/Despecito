@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../../data/datasources/database_datasource.dart';
 
 class DatabaseImpDatasource implements DatabaseDatasource {
+  //TODO o correto seria receber o hive por injeçao de dependencia
   final String _boxName = 'expenses';
 
   @override
