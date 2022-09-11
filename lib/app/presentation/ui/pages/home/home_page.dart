@@ -48,7 +48,9 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         key: scaffoldKey,
         appBar: CustomAppBar(
-          controller,
+          onPressedAddButton: () {
+            _createFunction();
+          },
         ),
         body: _body(),
         backgroundColor: Colors.grey[900],
@@ -95,5 +97,19 @@ class _HomePageState extends State<HomePage> {
   _deleteFunction(Expense item) async {
     controller.delete(item);
     Utils.showSnackBar(context, 'Despesa Removida com sucesso!');
+  }
+
+  _createFunction() {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return CustomAlertDialog(
+          function: (expense) async {
+            controller.expenseList.add(expense);
+            controller.create(expense);
+          },
+        );
+      },
+    );
   }
 }

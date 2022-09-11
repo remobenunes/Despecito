@@ -23,6 +23,10 @@ class Expense extends HiveObject {
     required this.createdAt,
   });
 
+  DateTime get getDateTime {
+    return DateTime.parse(createdAt!);
+  }
+
   @override
   String toString() {
     return 'Expense(value: $value, name: $name, category: $category, description: $description, createdAt: ${createdAt.toString()})';

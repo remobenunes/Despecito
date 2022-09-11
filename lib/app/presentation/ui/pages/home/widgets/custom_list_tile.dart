@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:despecito/app/domain/models/entities/expense/expense.dart';
 import 'package:flutter/material.dart';
 
@@ -26,6 +28,9 @@ class _CustomListTileState extends State<CustomListTile> {
       title: _title(),
       subtitle: _subtitle(),
       trailing: trailing(),
+      onTap: () {
+        log('${widget.expenseDto}');
+      },
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),

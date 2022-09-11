@@ -33,4 +33,5 @@ class HomeController {
     list$.value = await _databaseUsecase.getAll();
     expenseList = list$.value;
   }
+
 }
