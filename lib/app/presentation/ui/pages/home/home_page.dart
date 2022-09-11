@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:despecito/app/domain/models/entities/expense/expense.dart';
 import 'package:despecito/app/presentation/ui/pages/home/home_controller.dart';
 import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_alert_dialog.dart';
@@ -26,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     controller.getAll();
     controller.list$.addListener(() {
       setState(() {
-        print('zap!');
+        log('zap!');
       });
     });
 

@@ -77,14 +77,17 @@ class CustomAlertDialog extends StatelessWidget {
         function(expense);
 
         FocusManager.instance.primaryFocus?.unfocus();
-        Utils.showSnackBar(context, 'Nova Despesa Adicionada',);
+        Utils.showSnackBar(
+          context,
+          'Nova Despesa Adicionada',
+        );
       },
     );
   }
 
   ExpenseDto _createDto() {
     return ExpenseDto(
-      name: nameController.text == '' ? 'Não Nomeado' : nameController.text ,
+      name: nameController.text == '' ? 'Não Nomeado' : nameController.text,
       value: getDouble(),
       category: categoryController.text,
       description: descriptionController.text,
