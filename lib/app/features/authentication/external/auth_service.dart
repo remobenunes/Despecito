@@ -12,7 +12,7 @@ class AuthService {
 
   _authCheck() {
     _auth.authStateChanges().listen((User? user) {
-      user = (user == null) ? null : user;
+      this.user = (user == null) ? null : user;
       isLoading = false;
     });
   }

@@ -4,11 +4,13 @@ import 'package:despecito/app/domain/repositories/database_repository.dart';
 import 'package:despecito/app/domain/usecases/database_imp_usecase.dart';
 import 'package:despecito/app/domain/usecases/database_usecase.dart';
 import 'package:despecito/app/external/datasources/database_imp_datasource.dart';
+import 'package:despecito/app/features/authentication/external/auth_service.dart';
 import 'package:despecito/app/presentation/ui/pages/home/home_controller.dart';
 import 'package:despecito/configs/database_local_config.dart';
 import 'package:despecito/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import "dart:math";
 
@@ -48,11 +50,12 @@ class MyApp extends StatelessWidget {
       providers: providers,
       child: MaterialApp(
         title: 'Despecito',
+        builder: EasyLoading.init(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: generateRandomMaterialColor(),
         ),
-        initialRoute: '/login',
+        initialRoute: AuthService().user == null ? '/login' : '/home',
         routes: Routes.routes,
       ),
     );
