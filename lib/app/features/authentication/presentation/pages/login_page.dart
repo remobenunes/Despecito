@@ -2,6 +2,7 @@ import 'package:despecito/app/features/authentication/domain/errors/errors.dart'
 import 'package:despecito/app/features/authentication/external/auth_service.dart';
 import 'package:despecito/app/features/authentication/presentation/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:string_validator/string_validator.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,8 +13,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
-  bool isLoading = false;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -58,12 +57,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   login() async {
-    setState(() => isLoading = true);
+    EasyLoading.show(status: 'Carregando...');
     try {
       await AuthService().login(emailController.text, passwordController.text);
+      EasyLoading.dismiss();
       Navigator.popAndPushNamed(context, "/home");
     } on AuthException catch (e) {
-      setState(() => isLoading = false);
+      EasyLoading.dismiss();
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.message)));
     }
