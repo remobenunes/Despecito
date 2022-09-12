@@ -17,7 +17,9 @@ class CustomTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       keyboardType: keyboardType ?? TextInputType.text,
-      style: TextStyle(color: Theme.of(context).colorScheme.primary),
+      style: TextStyle(
+        color: Theme.of(context).colorScheme.primary,
+      ),
       decoration: _decoration(context),
       onTap: () {
         controller.clear();
@@ -39,8 +41,9 @@ class CustomTextField extends StatelessWidget {
           width: 2,
         ),
       ),
-      labelStyle: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
+      labelStyle: const TextStyle(
+          // color: Theme.of(context).colorScheme.primary,
+          color: Colors.white,
           fontStyle: FontStyle.italic,
           fontWeight: FontWeight.w400),
       isDense: true,

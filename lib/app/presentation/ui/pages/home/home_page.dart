@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:despecito/app/domain/models/entities/expense/expense.dart';
 import 'package:despecito/app/presentation/ui/pages/home/home_controller.dart';
 import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_alert_dialog.dart';
@@ -13,6 +15,7 @@ class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
@@ -26,7 +29,7 @@ class _HomePageState extends State<HomePage> {
     controller.getAll();
     controller.list$.addListener(() {
       setState(() {
-        print('zap!');
+        log('zap!');
       });
     });
 
@@ -45,7 +48,9 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         key: scaffoldKey,
         appBar: CustomAppBar(
-          controller,
+          onPressedAddButton: () {
+            _createFunction();
+          },
         ),
         body: _body(),
         backgroundColor: Colors.grey[900],
@@ -92,5 +97,19 @@ class _HomePageState extends State<HomePage> {
   _deleteFunction(Expense item) async {
     controller.delete(item);
     Utils.showSnackBar(context, 'Despesa Removida com sucesso!');
+  }
+
+  _createFunction() {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return CustomAlertDialog(
+          function: (expense) async {
+            controller.expenseList.add(expense);
+            controller.create(expense);
+          },
+        );
+      },
+    );
   }
 }

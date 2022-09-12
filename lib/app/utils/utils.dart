@@ -7,7 +7,7 @@ class Utils {
       SnackBar(
         content: Text(
           text,
-          style: TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 16),
         ),
         backgroundColor: Theme.of(context).primaryColor,
       ),

@@ -1,4 +1,5 @@
 import 'package:despecito/app/data/datasources/database_datasource.dart';
+import 'package:despecito/app/domain/models/entities/expense/expense.dart';
 import '../../domain/repositories/database_repository.dart';
 
 class DatabaseImpRepository implements DatabaseRepository {
@@ -7,17 +8,22 @@ class DatabaseImpRepository implements DatabaseRepository {
   DatabaseImpRepository(this._databaseDatasource);
 
   @override
-  void create() {
-    _databaseDatasource.create();
+  void create(Expense expense) async {
+    await _databaseDatasource.create(expense);
   }
 
   @override
-  void delete() {
-    _databaseDatasource.delete();
+  void delete(Expense expense) async {
+    await _databaseDatasource.delete(expense);
   }
 
   @override
-  void update() {
-    _databaseDatasource.update();
+  void update(Expense expense) async {
+    await _databaseDatasource.update(expense);
+  }
+  
+  @override
+  Future<List<Expense>> getAll() async {
+    return await _databaseDatasource.getAll();
   }
 }
