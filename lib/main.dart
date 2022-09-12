@@ -7,6 +7,7 @@ import 'package:despecito/app/external/datasources/database_imp_datasource.dart'
 import 'package:despecito/app/presentation/ui/pages/home/home_controller.dart';
 import 'package:despecito/configs/database_local_config.dart';
 import 'package:despecito/routes.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import "dart:math";
@@ -14,6 +15,8 @@ import "dart:math";
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseLocalConfig.start();
+  await Firebase.initializeApp();
+
 
   runApp(const MyApp());
 }
@@ -49,7 +52,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: generateRandomMaterialColor(),
         ),
-        initialRoute: '/',
+        initialRoute: '/login',
         routes: Routes.routes,
       ),
     );
