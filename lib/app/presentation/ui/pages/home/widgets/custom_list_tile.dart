@@ -53,7 +53,7 @@ class _CustomListTileState extends State<CustomListTile> {
 
   Text _subtitle() {
     return Text(
-      'R\$${widget.expenseDto.value ?? ''}',
+      'R\$ ${widget.expenseDto.value ?? ''}',
       style: const TextStyle(
         color: Colors.white,
         fontSize: 18,
