@@ -77,6 +77,7 @@ class CustomAlertDialog extends StatelessWidget {
         function(expense);
 
         FocusManager.instance.primaryFocus?.unfocus();
+
         Utils.showSnackBar(
           context,
           'Nova Despesa Adicionada',

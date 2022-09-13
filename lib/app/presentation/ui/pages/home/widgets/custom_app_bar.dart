@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:despecito/app/presentation/ui/pages/home/home_controller.dart';
-import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_alert_dialog.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Function() onPressedAddButton;
