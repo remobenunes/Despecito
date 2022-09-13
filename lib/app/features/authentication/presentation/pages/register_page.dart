@@ -13,45 +13,65 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-
-
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: Column(
-          children: [
-            const SizedBox(height: 50,),
-            _getImage(context),
-            const SizedBox(height: 10,),
-            Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.only(left: 20),
-                child: const Text("CADASTRAR", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30), )
-            ),
-            CustomTextField(controller: emailController, errorText: 'E-mail inválido.', labelText: 'E-mail',  validation: isEmail, setValueController: () {},),
-            CustomTextField(controller: passwordController, errorText: 'Senha inválida', labelText: 'Senha', setValueController: () {},),
-
-            _getButtonRegister(context),
-            const SizedBox(height: 10,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Já tem conta? "),
-                GestureDetector(
-                  child: const Text("Login", style: TextStyle(fontWeight: FontWeight.bold),),
-                  onTap: () {
-                    Navigator.popAndPushNamed(context, "/login");
-                  },
-                )
-              ],
-            )
-
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 50,
+              ),
+              _getImage(context),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.only(left: 20),
+                  child: const Text(
+                    "CADASTRAR",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  )),
+              CustomTextField(
+                controller: emailController,
+                errorText: 'E-mail inválido.',
+                labelText: 'E-mail',
+                validation: isEmail,
+                setValueController: () {},
+              ),
+              CustomTextField(
+                controller: passwordController,
+                errorText: 'Senha inválida',
+                labelText: 'Senha',
+                setValueController: () {},
+              ),
+              _getButtonRegister(context),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Já tem conta? "),
+                  GestureDetector(
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    onTap: () {
+                      Navigator.popAndPushNamed(context, "/login");
+                    },
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -60,7 +80,8 @@ class _RegisterPageState extends State<RegisterPage> {
   register() async {
     EasyLoading.show(status: 'Carregando...');
     try {
-      await AuthService().registrar(emailController.text, passwordController.text);
+      await AuthService()
+          .registrar(emailController.text, passwordController.text);
       EasyLoading.dismiss();
     } on AuthException catch (e) {
       EasyLoading.dismiss();
@@ -70,7 +91,10 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   _getImage(BuildContext context) {
-    return Image.asset("assets/images/finances-login.jpg", width: MediaQuery.of(context).size.width * 0.6,);
+    return Image.asset(
+      "assets/images/finances-login.jpg",
+      width: MediaQuery.of(context).size.width * 0.6,
+    );
   }
 
   _getButtonRegister(BuildContext context) {
@@ -80,10 +104,9 @@ class _RegisterPageState extends State<RegisterPage> {
       },
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-          minimumSize: MaterialStateProperty.all<Size>(Size(MediaQuery.of(context).size.width * 0.9, 45))
-      ),
+          minimumSize: MaterialStateProperty.all<Size>(
+              Size(MediaQuery.of(context).size.width * 0.9, 45))),
       child: const Text("Cadastrar"),
     );
   }
-
 }
