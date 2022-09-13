@@ -12,13 +12,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
-import "dart:math";
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseLocalConfig.start();
   await Firebase.initializeApp();
-
 
   runApp(const MyApp());
 }
@@ -53,39 +52,11 @@ class MyApp extends StatelessWidget {
         builder: EasyLoading.init(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: generateRandomMaterialColor(),
+          primarySwatch: Colors.indigo,
         ),
         initialRoute: AuthService().user == null ? '/login' : '/home',
         routes: Routes.routes,
       ),
     );
-  }
-
-  MaterialColor generateRandomMaterialColor() {
-    List<MaterialColor> list = [
-      Colors.amber,
-      Colors.blue,
-      Colors.blueGrey,
-      Colors.brown,
-      Colors.cyan,
-      Colors.deepOrange,
-      Colors.deepPurple,
-      Colors.green,
-      Colors.grey,
-      Colors.indigo,
-      Colors.lightBlue,
-      Colors.lightGreen,
-      Colors.lime,
-      Colors.orange,
-      Colors.pink,
-      Colors.purple,
-      Colors.red,
-      Colors.teal,
-      // Colors.yellow,
-    ];
-
-    final random = Random();
-    int randomIndex = random.nextInt(list.length);
-    return list[randomIndex];
   }
 }

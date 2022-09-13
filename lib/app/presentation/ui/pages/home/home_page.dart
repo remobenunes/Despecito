@@ -43,17 +43,21 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        key: scaffoldKey,
-        appBar: CustomAppBar(
-          onPressedAddButton: () {
-            _createFunction();
-          },
-        ),
-        body: _body(),
-        backgroundColor: Colors.grey[900],
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: _buildAppBar(),
+      body: SafeArea(
+        child: _body(),
       ),
+      backgroundColor: Colors.grey[900],
+    );
+  }
+
+  CustomAppBar _buildAppBar() {
+    return CustomAppBar(
+      onPressedAddButton: () {
+        _createFunction();
+      },
     );
   }
 
