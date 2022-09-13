@@ -6,7 +6,7 @@ class Routes {
   
   static var routes = {
     '/home': (context) => const HomePage(),
-    '/login': (context) => LoginPage(),
-    '/register': (context) => RegisterPage(),
+    '/login': (context) => const LoginPage(),
+    '/register': (context) => const RegisterPage(),
   };
 }

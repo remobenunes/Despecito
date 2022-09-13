@@ -6,10 +6,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:string_validator/string_validator.dart';
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
@@ -30,7 +30,7 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(height: 10,),
             Container(
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(left: 20),
+                padding: const EdgeInsets.only(left: 20),
                 child: const Text("CADASTRAR", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30), )
             ),
             CustomTextField(controller: emailController, errorText: 'E-mail inválido.', labelText: 'E-mail',  validation: isEmail, setValueController: () {},),
@@ -75,7 +75,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   _getButtonRegister(BuildContext context) {
     return ElevatedButton(
-      child: const Text("Cadastrar"),
       onPressed: () {
         register();
       },
@@ -83,6 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
           backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
           minimumSize: MaterialStateProperty.all<Size>(Size(MediaQuery.of(context).size.width * 0.9, 45))
       ),
+      child: const Text("Cadastrar"),
     );
   }
 

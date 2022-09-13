@@ -6,16 +6,15 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:string_validator/string_validator.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,32 +23,47 @@ class _LoginPageState extends State<LoginPage> {
         color: Colors.white,
         child: Column(
           children: [
-            const SizedBox(height: 50,),
+            const SizedBox(height: 50),
             _getImage(context),
-            const SizedBox(height: 10,),
+            const SizedBox(height: 10),
             Container(
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(left: 20),
-                child: const Text("LOGIN", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30), )
+                padding: const EdgeInsets.only(left: 20),
+                child: const Text(
+                  "LOGIN",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                )),
+            CustomTextField(
+              controller: emailController,
+              errorText: 'E-mail inválido.',
+              labelText: 'E-mail',
+              validation: isEmail,
+              setValueController: () {},
             ),
-            CustomTextField(controller: emailController, errorText: 'E-mail inválido.', labelText: 'E-mail',  validation: isEmail, setValueController: () {},),
-            CustomTextField(controller: passwordController, errorText: 'Senha inválida', labelText: 'Senha', setValueController: () {},),
-            const SizedBox(height: 10,),
+            CustomTextField(
+              controller: passwordController,
+              errorText: 'Senha inválida',
+              labelText: 'Senha',
+              setValueController: () {},
+            ),
+            const SizedBox(height: 10),
             _getButtonLogin(context),
-            const SizedBox(height: 10,),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text("Novo no Despecito? "),
                 GestureDetector(
-                  child: const Text("Cadastrar", style: TextStyle(fontWeight: FontWeight.bold),),
+                  child: const Text(
+                    "Cadastrar",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   onTap: () {
                     Navigator.popAndPushNamed(context, "/register");
                   },
                 )
               ],
             )
-
           ],
         ),
       ),
@@ -70,20 +84,22 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _getImage(BuildContext context) {
-    return Image.asset("assets/images/finances-login.jpg", width: MediaQuery.of(context).size.width * 0.6,);
+    return Image.asset(
+      "assets/images/finances-login.jpg",
+      width: MediaQuery.of(context).size.width * 0.6,
+    );
   }
 
   _getButtonLogin(BuildContext context) {
     return ElevatedButton(
-      child: const Text("Login"),
       onPressed: () {
         login();
       },
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-          minimumSize: MaterialStateProperty.all<Size>(Size(MediaQuery.of(context).size.width * 0.9, 45))
-      ),
+          minimumSize: MaterialStateProperty.all<Size>(
+              Size(MediaQuery.of(context).size.width * 0.9, 45))),
+      child: const Text("Login"),
     );
   }
-
 }
