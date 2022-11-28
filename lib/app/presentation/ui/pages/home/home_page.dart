@@ -26,9 +26,9 @@ class _HomePageState extends State<HomePage> {
     controller = HomeController(context.read());
     controller.getAll();
     controller.list$.addListener(() {
-      setState(() {
+      // setState(() {
         print('zap!');
-      });
+      // });
     });
 
     super.initState();
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildTopTile(),
-          ExpenseWidget(),
+          const ExpenseWidget(),
         ],
       ),
     );
@@ -112,7 +112,6 @@ class _HomePageState extends State<HomePage> {
       builder: (_) {
         return CustomAlertDialog(
           function: (expense) async {
-            controller.expenseList.add(expense);
             controller.create(expense);
           },
         );

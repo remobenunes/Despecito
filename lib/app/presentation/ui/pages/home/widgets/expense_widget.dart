@@ -18,11 +18,11 @@ class _ExpenseWidgetState extends State<ExpenseWidget> {
   @override
   void initState() {
     controller = HomeController(context.read());
-    controller.getAll();
+
     controller.list$.addListener(() {
-      setState(() {
+
         print('zap expenseWidget');
-      });
+
     });
 
     super.initState();
@@ -43,7 +43,7 @@ class _ExpenseWidgetState extends State<ExpenseWidget> {
 
   //fazer um for quebrando a lista que volta, pra cada item da lista, criar um expense
   _buildExpenseList() {
-    return ExpenseListWidget(expenseList: controller.expenseList);
+    return ExpenseListWidget();
   }
 
   _buildExpenseGraphWidget() {
