@@ -19,58 +19,60 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: Column(
-          children: [
-            const SizedBox(height: 50),
-            _getImage(context),
-            const SizedBox(height: 10),
-            Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.only(left: 20),
-                child: const Text(
-                  "LOGIN",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                )),
-            CustomTextField(
-              controller: emailController,
-              errorText: 'E-mail inválido.',
-              labelText: 'E-mail',
-              validation: isEmail,
-              setValueController: () {},
-            ),
-            CustomTextField(
-              controller: passwordController,
-              errorText: 'Senha inválida',
-              labelText: 'Senha',
-              setValueController: () {},
-            ),
-            const SizedBox(height: 10),
-            _getButtonLogin(context),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Novo no Despecito? "),
-                GestureDetector(
+      body: SingleChildScrollView(
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            children: [
+              const SizedBox(height: 50),
+              _getImage(context),
+              const SizedBox(height: 10),
+              Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.only(left: 20),
                   child: const Text(
-                    "Cadastrar",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  onTap: () {
-                    Navigator.popAndPushNamed(context, "/register");
-                  },
-                )
-              ],
-            )
-          ],
+                    "LOGIN",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  )),
+              CustomTextField(
+                controller: emailController,
+                errorText: 'E-mail inválido.',
+                labelText: 'E-mail',
+                validation: isEmail,
+                setValueController: () {},
+              ),
+              CustomTextField(
+                controller: passwordController,
+                errorText: 'Senha inválida',
+                labelText: 'Senha',
+                setValueController: () {},
+              ),
+              const SizedBox(height: 10),
+              _getButtonLogin(context),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Novo no Despecito? "),
+                  GestureDetector(
+                    child: const Text(
+                      "Cadastrar",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    onTap: () {
+                      Navigator.popAndPushNamed(context, "/register");
+                    },
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 
-  login() async {
+  login(context) async {
     EasyLoading.show(status: 'Carregando...');
     try {
       await AuthService().login(emailController.text, passwordController.text);
@@ -93,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
   _getButtonLogin(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        login();
+        login(context);
       },
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
