@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:despecito/app/domain/models/entities/expense/expense.dart';
 import 'package:despecito/app/presentation/ui/pages/home/home_controller.dart';
 import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_alert_dialog.dart';
 import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_app_bar.dart';
 import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_list_tile.dart';
+import 'package:despecito/app/presentation/ui/pages/home/widgets/expense_widget.dart';
 import 'package:despecito/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -28,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     controller.getAll();
     controller.list$.addListener(() {
       setState(() {
-        log('zap!');
+        print('zap!');
       });
     });
 
@@ -62,24 +61,29 @@ class _HomePageState extends State<HomePage> {
   }
 
   _body() {
-    return ListView.builder(
-      itemCount: controller.expenseList.length,
-      itemBuilder: (context, index) {
-        var item = controller.expenseList[index];
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildTopTile(),
+          ExpenseWidget(),
+        ],
+      ),
+    );
+  }
 
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CustomListTile(
-            expenseDto: item,
-            updateFunction: () {
-              _updateFunction(item);
-            },
-            deleteFunction: () {
-              _deleteFunction(item);
-            },
-          ),
-        );
-      },
+  ListTile _buildTopTile() {
+    return const ListTile(
+      leading: Icon(Icons.arrow_left),
+      trailing: Icon(Icons.arrow_right),
+      tileColor: Colors.grey,
+      iconColor: Colors.white,
+      title: Center(
+        child: Text(
+          'Janeiro',
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
+      ),
     );
   }
 

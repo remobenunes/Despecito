@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseLocalConfig.start();
@@ -43,6 +42,8 @@ class MyApp extends StatelessWidget {
       //controllers
       Provider<HomeController>(
           create: (context) => HomeController(context.read())),
+      
+          
     ];
 
     return MultiProvider(
@@ -54,7 +55,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.indigo,
         ),
-        initialRoute: AuthService().user == null ? '/login' : '/home',
+        // initialRoute: AuthService().user == null ? '/login' : '/home',
+        initialRoute: '/home',
         routes: Routes.routes,
       ),
     );
