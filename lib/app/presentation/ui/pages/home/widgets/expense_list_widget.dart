@@ -8,11 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:despecito/app/domain/models/entities/expense/expense.dart';
 
 class ExpenseListWidget extends StatefulWidget {
-  final List<Expense> expenseList;
-
   const ExpenseListWidget({
     Key? key,
-    required this.expenseList,
   }) : super(key: key);
 
   @override
@@ -20,51 +17,43 @@ class ExpenseListWidget extends StatefulWidget {
 }
 
 class _ExpenseListWidgetState extends State<ExpenseListWidget> {
-  late final HomeController controller;
-
-  @override
-  void initState() {
-    controller = HomeController(context.read());
-    controller.list$.addListener(() {
-      setState(() {
-        print('zap expense lsit');
-      });
-    });
-
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (widget.expenseList.isEmpty) {
-      return TextButton(
-        child: const Text('Para começar, Crie uma nova despesa'),
-        onPressed: () {
-          _createFunction();
-        },
-      );
-    }
+    Provider.of<HomeController>(context).getAll();
 
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: widget.expenseList.length,
-      itemBuilder: (context, index) {
-        var item = widget.expenseList[index];
+    return ValueListenableBuilder(
+        valueListenable: Provider.of<HomeController>(context).list$,
+        builder: (context, List<Expense> list, _) {
+          if (list.isEmpty) {
+            return TextButton(
+              child: const Text('Para começar, Crie uma nova despesa'),
+              onPressed: () {
+                _createFunction();
+              },
+            );
+          }
 
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CustomListTile(
-            expenseDto: item,
-            updateFunction: () {
-              _updateFunction(item);
+          return ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              var item = list[index];
+
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CustomListTile(
+                  expenseDto: item,
+                  updateFunction: () {
+                    _updateFunction(item);
+                  },
+                  deleteFunction: () {
+                    _deleteFunction(item);
+                  },
+                ),
+              );
             },
-            deleteFunction: () {
-              _deleteFunction(item);
-            },
-          ),
-        );
-      },
-    );
+          );
+        });
   }
 
   _updateFunction(Expense item) {
@@ -74,7 +63,7 @@ class _ExpenseListWidgetState extends State<ExpenseListWidget> {
         return CustomAlertDialog(
           expense: item,
           function: (expense) async {
-            controller.update(expense);
+            Provider.of<HomeController>(context, listen: false).update(expense);
           },
         );
       },
@@ -82,7 +71,7 @@ class _ExpenseListWidgetState extends State<ExpenseListWidget> {
   }
 
   _deleteFunction(Expense item) async {
-    controller.delete(item);
+    Provider.of<HomeController>(context, listen: false).delete(item);
     Utils.showSnackBar(context, 'Despesa Removida com sucesso!');
   }
 
@@ -92,8 +81,7 @@ class _ExpenseListWidgetState extends State<ExpenseListWidget> {
       builder: (_) {
         return CustomAlertDialog(
           function: (expense) async {
-            controller.expenseList.add(expense);
-            controller.create(expense);
+            Provider.of<HomeController>(context, listen: false).create(expense);
           },
         );
       },

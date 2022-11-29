@@ -2,7 +2,6 @@ import 'package:despecito/app/domain/models/entities/expense/expense.dart';
 import 'package:despecito/app/presentation/ui/pages/home/home_controller.dart';
 import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_alert_dialog.dart';
 import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_app_bar.dart';
-import 'package:despecito/app/presentation/ui/pages/home/widgets/custom_list_tile.dart';
 import 'package:despecito/app/presentation/ui/pages/home/widgets/expense_widget.dart';
 import 'package:despecito/app/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -18,20 +17,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late final HomeController controller;
+  // late final HomeController controller;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    controller = HomeController(context.read());
-    controller.getAll();
-    controller.list$.addListener(() {
-      setState(() {
-        print('zap!');
-      });
-    });
-
     super.initState();
+    // controller = Provider.of<HomeController>(context).list$;
+    // controller.getAll();
+    // Provider.of<HomeController>(context).list$.addListener(() {
+    //   print('zap!');
+    // });
   }
 
   @override
@@ -61,15 +57,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   _body() {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildTopTile(),
-          ExpenseWidget(),
-        ],
-      ),
-    );
+    return ValueListenableBuilder(
+        valueListenable: Provider.of<HomeController>(context).list$,
+        builder: (context, ba, _) {
+          return SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildTopTile(),
+                const ExpenseWidget(),
+              ],
+            ),
+          );
+        });
   }
 
   ListTile _buildTopTile() {
@@ -87,33 +87,13 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _updateFunction(Expense item) {
-    return showDialog(
-      context: context,
-      builder: (_) {
-        return CustomAlertDialog(
-          expense: item,
-          function: (expense) async {
-            controller.update(expense);
-          },
-        );
-      },
-    );
-  }
-
-  _deleteFunction(Expense item) async {
-    controller.delete(item);
-    Utils.showSnackBar(context, 'Despesa Removida com sucesso!');
-  }
-
   _createFunction() {
     showDialog(
       context: context,
       builder: (_) {
         return CustomAlertDialog(
           function: (expense) async {
-            controller.expenseList.add(expense);
-            controller.create(expense);
+            Provider.of<HomeController>(context, listen: false).create(expense);
           },
         );
       },
