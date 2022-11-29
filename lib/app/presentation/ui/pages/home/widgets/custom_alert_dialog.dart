@@ -73,6 +73,7 @@ class CustomAlertDialog extends StatelessWidget {
     return ElevatedButton(
       child: const Text('Adicionar'),
       onPressed: () {
+        Navigator.pop(context);
         ExpenseDto expense = _createDto();
         function(expense);
 

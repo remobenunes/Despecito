@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 class HomeController {
   final DatabaseUsecase _databaseUsecase;
   bool loading = false;
-  List<Expense> expenseList = [];
+
   var list$ = ValueNotifier<List<Expense>>([]);
 
   HomeController(this._databaseUsecase);
@@ -30,7 +30,7 @@ class HomeController {
   }
 
   void getAll() async {
-    list$.value = await _databaseUsecase.getAll();
-    expenseList = list$.value;
+    final tempList = await _databaseUsecase.getAll();
+    list$.value = tempList;
   }
 }
